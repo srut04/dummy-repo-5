@@ -1,10 +1,8 @@
 name: Block PRs stacked on dev
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, reopened, synchronize, edited, ready_for_review]
-    branches: 
-      - 'dev'
 
 permissions:
   pull-requests: read
