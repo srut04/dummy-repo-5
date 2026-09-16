@@ -16,7 +16,8 @@ jobs:
     steps:
       - name: Block Stacked PRs
         run: |
-          if [ "$GITHUB_BASE_REF" != "dev" ]; then
+          echo "{{ github.base_ref }}"
+          if [ "{{ github.base_ref }}" != "dev" ]; then
             echo "::error::Stacked pull requests are not allowed."
             exit 1
           fi
