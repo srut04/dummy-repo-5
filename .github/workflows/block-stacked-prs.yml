@@ -3,8 +3,6 @@ name: Block PRs stacked on dev
 on:
   pull_request:
     types: [opened, reopened, synchronize, edited, ready_for_review]
-    branches: 
-      - 'dev'
 
 permissions:
   pull-requests: read
@@ -15,8 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Block Stacked PRs
-        if: github.base_ref != 'dev'
         run: |
-          echo "::error::Stacked PRs are disabled in this repository. Target branch must be 'dev'."
-          exit 1
+          echo ${{ github.event.pull_request.stack }}
+          if [ "${{ github.event.pull_request.stack }}" != "null" ]; then
+            echo "::error::Stacked pull requests are not allowed."
+            exit 1
+          fi
         
